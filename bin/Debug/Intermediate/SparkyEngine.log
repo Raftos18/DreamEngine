@@ -1,0 +1,5 @@
+﻿  main.cpp
+c:\program files (x86)\windows kits\8.1\include\shared\minwindef.h(130): warning C4005: 'APIENTRY': macro redefinition
+  c:\users\nraft\desktop\gameengines\sparky\dependencies\glfw\include\glfw3.h(98): note: see previous definition of 'APIENTRY'
+  SparkyEngine.vcxproj -> C:\Users\nraft\Desktop\GameEngines\Sparky\bin\Debug\SparkyEngine.exe
+  SparkyEngine.vcxproj -> C:\Users\nraft\Desktop\GameEngines\Sparky\bin\Debug\SparkyEngine.pdb (Partial PDB)

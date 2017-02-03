@@ -40,7 +40,7 @@ int main()
 	sh->Enable();
 
 	glActiveTexture(GL_TEXTURE0);
-	Texture texture("C:/Users/nraft/Desktop/test.png");
+	Texture texture("test.png");
 	texture.Bind();	
 
 	sh->SetUniform1i("tex", 0);	
