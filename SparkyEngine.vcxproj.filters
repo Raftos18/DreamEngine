@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source\Graphics">
+      <UniqueIdentifier>{7b84f50e-359c-4d27-b3ec-5b70f38b7753}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Input">
+      <UniqueIdentifier>{9a821edc-ce16-43cc-979c-bc02e0de5523}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Math">
+      <UniqueIdentifier>{56c9deb0-41d4-4c57-a32b-eb603d65659a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{65ce704c-72d1-4293-9462-25b5c2e1d6ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Utilities">
+      <UniqueIdentifier>{6bb62143-c171-4d1b-b4ef-b859fb0f039c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Graphics\Buffers">
+      <UniqueIdentifier>{4bcd0fdb-b516-443a-9863-349a29b38da1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Graphics\Layers">
+      <UniqueIdentifier>{4f6a34d5-a7c5-4432-bce0-f73341394c2b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="window.cpp">
+      <Filter>Source\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="vector2.cpp">
+      <Filter>Source\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Mat4x4.cpp">
+      <Filter>Source\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Source\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="buffer.cpp">
+      <Filter>Source\Graphics\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="indexBuffer.cpp">
+      <Filter>Source\Graphics\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="vector4.cpp">
+      <Filter>Source\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="vector3.cpp">
+      <Filter>Source\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="vertexArray.cpp">
+      <Filter>Source\Graphics\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer2d.cpp">
+      <Filter>Source\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="sprite.cpp">
+      <Filter>Source\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="layers.cpp">
+      <Filter>Source\Graphics\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="group.cpp">
+      <Filter>Source\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="batchRenderer.cpp">
+      <Filter>Source\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="texture.cpp">
+      <Filter>Source\Graphics</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="window.h">
+      <Filter>Source\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="vector2.h">
+      <Filter>Source\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="maths.h">
+      <Filter>Source\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Mat4x4.h">
+      <Filter>Source\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="fileUtil.h">
+      <Filter>Source\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Source\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="buffer.h">
+      <Filter>Source\Graphics\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="indexBuffer.h">
+      <Filter>Source\Graphics\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="vector4.h">
+      <Filter>Source\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="vector3.h">
+      <Filter>Source\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="vertexArray.h">
+      <Filter>Source\Graphics\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="renderable2d.h">
+      <Filter>Source\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer2d.h">
+      <Filter>Source\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="sprite.h">
+      <Filter>Source\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="timer.h">
+      <Filter>Source\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="layers.h">
+      <Filter>Source\Graphics\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="group.h">
+      <Filter>Source\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="batchRenderer.h">
+      <Filter>Source\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="texture.h">
+      <Filter>Source\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageLoad.h">
+      <Filter>Source\Graphics</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="basic.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="basic.vert">
+      <Filter>Shaders</Filter>
+    </None>
+  </ItemGroup>
+</Project>
