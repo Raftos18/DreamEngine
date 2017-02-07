@@ -1,12 +1,12 @@
 #pragma once
 #include "renderer2d.h"
 
-#include "Graphics\texture.h"
-#include "Graphics\Buffers\buffer.h"
-#include "Graphics\Buffers\indexBuffer.h"
-#include "Graphics\Buffers\vertexArray.h"
-#include "Math\maths.h"
-#include "Graphics\Shaders\Shader.h"
+#include "texture.h"
+#include "Buffers\buffer.h"
+#include "Buffers\indexBuffer.h"
+#include "Buffers\vertexArray.h"
+#include "..\Math\maths.h"
+#include "Shaders\Shader.h"
 
 namespace dream
 {

@@ -1,6 +1,6 @@
 #include "layers.h"
-#include "batchRenderer.h"
-#include "maths.h"
+#include "..\batchRenderer.h"
+#include "..\..\Math\maths.h"
 
 dream::graphics::Layer::Layer(IRenderer2D* renderer, Shader * shader)
 	: m_renderer(renderer), m_shader(shader)

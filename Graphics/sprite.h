@@ -7,7 +7,7 @@ namespace dream
 	namespace graphics
 	{
 		class Sprite : public IRenderable2D
-		{
+		{			
 		public:
 			Sprite(float x, float y, float width, float height, Vector4& color);
 			Sprite(float x, float y, float width, float height, Texture* texture);

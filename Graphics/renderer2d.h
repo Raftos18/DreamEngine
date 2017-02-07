@@ -3,7 +3,7 @@
 #include <vector>
 
 //#include "renderable2d.h"
-#include "Math\maths.h"
+#include "..\Math\maths.h"
 
 namespace dream
 {
@@ -29,7 +29,7 @@ namespace dream
 		{
 		protected:
 			std::vector<maths::Mat4x4> m_transformationStack;
-			const maths::Mat4x4* m_transformationBack;
+			const maths::Mat4x4* m_transformationBack;			
 
 			// Always hold at least the identity matrix in the transformation stack
 			IRenderer2D() 

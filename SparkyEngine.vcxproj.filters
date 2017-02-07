@@ -29,5 +29,80 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Math\Mat4x4.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\vector2.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\vector3.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\vector4.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\batchRenderer.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\label.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\renderer2d.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\sprite.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\texture.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\window.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Shaders\Shader.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Layers\group.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Layers\layers.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Buffers\buffer.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Buffers\indexBuffer.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Buffers\vertexArray.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Utils\fileUtil.h" />
+    <ClInclude Include="Utils\ImageLoad.h" />
+    <ClInclude Include="Utils\timer.h" />
+    <ClInclude Include="Math\Mat4x4.h" />
+    <ClInclude Include="Math\maths.h" />
+    <ClInclude Include="Math\vector2.h" />
+    <ClInclude Include="Math\vector3.h" />
+    <ClInclude Include="Math\vector4.h" />
+    <ClInclude Include="Graphics\batchRenderer.h" />
+    <ClInclude Include="Graphics\label.h" />
+    <ClInclude Include="Graphics\renderable2d.h" />
+    <ClInclude Include="Graphics\renderer2d.h" />
+    <ClInclude Include="Graphics\sprite.h" />
+    <ClInclude Include="Graphics\texture.h" />
+    <ClInclude Include="Graphics\window.h" />
+    <ClInclude Include="Graphics\Shaders\Shader.h" />
+    <ClInclude Include="Graphics\Layers\group.h" />
+    <ClInclude Include="Graphics\Layers\layers.h" />
+    <ClInclude Include="Graphics\Buffers\buffer.h" />
+    <ClInclude Include="Graphics\Buffers\indexBuffer.h" />
+    <ClInclude Include="Graphics\Buffers\vertexArray.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Graphics\Shaders\basic.frag" />
+    <None Include="Graphics\Shaders\basic.vert" />
   </ItemGroup>
 </Project>

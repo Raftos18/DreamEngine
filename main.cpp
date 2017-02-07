@@ -20,7 +20,7 @@ int main()
 	using namespace maths;
 
 	Window window("dream!", 960, 540);
-	Shader* sh = new Shader("basic.vert", "basic.frag");
+	Shader* sh = new Shader("./Graphics/Shaders/basic.vert", "./Graphics/Shaders/basic.frag");
 	TileLayer layer(sh);
 
 	Timer time;
@@ -32,7 +32,7 @@ int main()
 
 	for (float i = -9.0f; i < 9.0f; i++)
 	{
-		for (float j = -16.0f; j < 16.0f; j++)
+		for (float j = -16.0f; j < 16.0f; j++) 
 		{			
 			//layer.Add(new Sprite(j, i, 0.9f, 0.9f, Vector4(rand() % 1000 / 1000.0f, 0, 1, 1)));
 			layer.Add(new Sprite(j, i, 1.0f, 1.0f, rand() % 2 == 0 ? ta : tb));
