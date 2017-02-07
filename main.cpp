@@ -1,17 +1,14 @@
 ﻿#pragma once
 
-#include <ft2build.h>
-#include <freetype\freetype.h>
+#include "Graphics\window.h"
+#include "Utils\timer.h"
+#include "Graphics\Shaders\Shader.h"
+#include "Math\maths.h"
+#include "Graphics\sprite.h"
 
-#include "window.h"
-#include "timer.h"
-#include "Shader.h"
-#include "maths.h"
-#include "sprite.h"
-
-#include "layers.h"
-#include "group.h"
-#include "texture.h"
+#include "Graphics\Layers\layers.h"
+#include "Graphics\Layers\group.h"
+#include "Graphics\texture.h"
 
 #define RENDERER_TYPE 1
 

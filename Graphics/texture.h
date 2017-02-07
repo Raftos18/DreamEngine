@@ -4,7 +4,7 @@
 #include <GL\glew.h>
 #include <string>
 
-#include "ImageLoad.h"
+#include "Utils\ImageLoad.h"
 
 namespace dream
 {

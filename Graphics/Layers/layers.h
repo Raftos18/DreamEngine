@@ -1,8 +1,8 @@
 #pragma once
 
-#include "renderer2d.h"
-#include "renderable2d.h"
-#include "group.h"
+#include "Graphics\renderer2d.h"
+#include "Graphics\renderable2d.h"
+#include "Graphics\Layers\group.h"
 
 namespace dream
 {

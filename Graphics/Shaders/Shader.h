@@ -4,8 +4,8 @@
 #include <iostream>
 #include <vector>
 
-#include "fileUtil.h"
-#include "maths.h"
+#include "Utils\fileUtil.h"
+#include "Math\maths.h"
 
 namespace dream
 {

@@ -24,9 +24,7 @@ namespace dream
 
 			// There is literaly no reason for this
 			Mat4x4(float diagonal);
-
 			static Mat4x4 Identity();
-
 			// These should be in a camera class
 			static Mat4x4 Orthographic(float left, float right, float bottom, float top, float near, float far);
 			static Mat4x4 Perspective(float fov, float aspectRatio, float near, float far);

@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
-#include <GL/glew.h>
+
+#include <GL\glew.h>
 #include <glfw3.h>
 
 #define MAX_KEYS 1024

@@ -133,49 +133,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="batchRenderer.h" />
-    <ClInclude Include="group.h" />
-    <ClInclude Include="ImageLoad.h" />
-    <ClInclude Include="indexBuffer.h" />
-    <ClInclude Include="label.h" />
-    <ClInclude Include="layers.h" />
-    <ClInclude Include="Mat4x4.h" />
-    <ClInclude Include="maths.h" />
-    <ClInclude Include="renderable2d.h" />
-    <ClInclude Include="renderer2d.h" />
-    <ClInclude Include="Shader.h" />
-    <ClInclude Include="sprite.h" />
-    <ClInclude Include="texture.h" />
-    <ClInclude Include="timer.h" />
-    <ClInclude Include="vector2.h" />
-    <ClInclude Include="vector3.h" />
-    <ClInclude Include="vector4.h" />
-    <ClInclude Include="buffer.h" />
-    <ClInclude Include="vertexArray.h" />
-    <ClInclude Include="window.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="batchRenderer.cpp" />
-    <ClCompile Include="buffer.cpp" />
-    <ClCompile Include="group.cpp" />
-    <ClCompile Include="indexBuffer.cpp" />
-    <ClCompile Include="label.cpp" />
-    <ClCompile Include="layers.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Mat4x4.cpp" />
-    <ClCompile Include="renderer2d.cpp" />
-    <ClCompile Include="Shader.cpp" />
-    <ClCompile Include="sprite.cpp" />
-    <ClCompile Include="texture.cpp" />
-    <ClCompile Include="vector2.cpp" />
-    <ClCompile Include="vector3.cpp" />
-    <ClCompile Include="vector4.cpp" />
-    <ClCompile Include="vertexArray.cpp" />
-    <ClCompile Include="window.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="basic.frag" />
-    <None Include="basic.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
