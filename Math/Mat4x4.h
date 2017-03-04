@@ -40,8 +40,8 @@ namespace dream
 			Mat4x4& operator *=(const Mat4x4 other);
 
 			// These should be more abstracted
-			static Mat4x4 Translation(Vector3& translation);
-			static Mat4x4 Rotation(float angle, Vector3& axis);
+			static Mat4x4 Translate(Vector3& translation);
+			static Mat4x4 Rotate(float angle, Vector3& axis);
 			static Mat4x4 Scale(Vector3& scale);
 		};
 	}

@@ -42,8 +42,6 @@ namespace dream
 
 			result.m_Elements[2 + 2 * 4] = 2.0f / (near - far);
 
-
-
 			result.m_Elements[0 + 3 * 4] = (left + right) / (left - right);
 			result.m_Elements[1 + 3 * 4] = (bottom + top) / (bottom - top);
 			result.m_Elements[2 + 3 * 4] = (far + near) / (far - near);
@@ -128,7 +126,7 @@ namespace dream
 			return Multiply(other);
 		}
 
-		Mat4x4 dream::maths::Mat4x4::Translation(Vector3 & translation)
+		Mat4x4 dream::maths::Mat4x4::Translate(Vector3 & translation)
 		{
 			Mat4x4 result(1.0f);
 
@@ -139,7 +137,7 @@ namespace dream
 			return result;
 		}
 
-		Mat4x4 dream::maths::Mat4x4::Rotation(float angle, Vector3 & axis)
+		Mat4x4 dream::maths::Mat4x4::Rotate(float angle, Vector3 & axis)
 		{
 			Mat4x4 result(1.0f);
 
@@ -153,17 +151,17 @@ namespace dream
 			float y = axis.GetY();
 			float z = axis.GetZ();
 
-			result.m_Elements[0 + 0 * 4] = x * omc + c;
+			result.m_Elements[0 + 0 * 4] = x * x * omc + c;
 			result.m_Elements[0 + 1 * 4] = y * x * omc + z * s;
 			result.m_Elements[0 + 2 * 4] = x * z * omc - y * s;
 
 			result.m_Elements[1 + 0 * 4] = x * y * omc - z * s;
-			result.m_Elements[1 + 1 * 4] = y * omc + c;
+			result.m_Elements[1 + 1 * 4] = y * y * omc + c;
 			result.m_Elements[1 + 2 * 4] = y * z * omc + x * s;
 				   
 			result.m_Elements[2 + 0 * 4] = x * z * omc + y * s;
 			result.m_Elements[2 + 1 * 4] = y * z * omc - x * s;
-			result.m_Elements[2 + 2 * 4] = z * omc + c;
+			result.m_Elements[2 + 2 * 4] = z * z * omc + c;
 
 			return result;
 		}
