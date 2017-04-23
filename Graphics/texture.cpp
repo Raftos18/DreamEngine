@@ -4,39 +4,48 @@
 
 
 dream::graphics::Texture::Texture(const std::string& name, const std::string & filename)
-	: m_name(name), m_filename(filename)
+	: m_Name(name), m_Filename(filename)
 {
-	m_tID = Load();
+	// Save the textrure id assigned from OpenGL
+	m_TextureId = Load();
 }
 
 dream::graphics::Texture::~Texture()
 {
-
+	
 }
 
 void dream::graphics::Texture::Bind() const
 {
-	glBindTexture(GL_TEXTURE_2D, m_tID);
+	// Bind a openGL texture to the texture id
+	glBindTexture(GL_TEXTURE_2D, m_TextureId);
 }
 
 void dream::graphics::Texture::Unbind() const
 {
+	// Unbind OpenGL texture
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 GLuint dream::graphics::Texture::Load()
 {
-	BYTE* pixels = utilities::File::LoadImage(m_filename.c_str(), &m_width, &m_height);	
-	GLuint result;
+	// Load image from file
+	BYTE* pixels = utilities::File::LoadImage(m_Filename.c_str(), &m_Width, &m_Height);	
+	GLuint textureID;
 
-	glGenTextures(1, &result);
-	glBindTexture(GL_TEXTURE_2D, result);
+	// Generate a new texture and save the id returned from OpenGL
+	glGenTextures(1, &textureID);
+	// Bind a OpenGL texture to the id 
+	glBindTexture(GL_TEXTURE_2D, textureID);
+	// Set up the texture parameters 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_width, m_height, 0, GL_BGR, GL_UNSIGNED_BYTE, pixels);
+	// Pass texture object data to OpenGL
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_Width, m_Height, 0, GL_BGR, GL_UNSIGNED_BYTE, pixels);
+	// Unbind for later use
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 	delete[] pixels;
 
-	return result;
+	return textureID;
 }

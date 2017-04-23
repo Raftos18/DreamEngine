@@ -32,12 +32,12 @@ namespace dream
 			// Used in groups
 			inline void Pop(); 
 
-			virtual void Begin() {};
-			virtual void End() {};			
+			virtual void Start() {};
+			virtual void Stop() {};			
 			virtual void RenderText(const std::string& font, const std::string& text, float x, float y, float scale, unsigned int color) { };
 			virtual void Submit(const IRenderable2D* renderable) { };
-			virtual void Flush() = 0;
-		}; 
+			virtual void Flush() = 0;			
+		};
 
 		// Base class inline impemantations.
 		void IRenderer2D::Push(const maths::Mat4x4& mat, bool over)

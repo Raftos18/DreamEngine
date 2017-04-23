@@ -35,21 +35,6 @@ namespace dream
 			TileLayer(Shader* shader);
 			~TileLayer();
 		};
-
-		// A UI based layer implementation
-		class UILayer : public Layer
-		{
-		public:
-			UILayer(Shader* shader);
-			~UILayer();
-
-			void Add(IRenderable2D* renderable) override;
-			void Render() override;
-
-		private:
-			// Removed from UILayer.
-			void Add(Group* group) override { };
-		};
 	}
 }
 

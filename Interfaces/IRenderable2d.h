@@ -15,56 +15,36 @@ namespace dream
 		// This should be implemented by any 2D object that wants to be drawn.
 		class IRenderable2D
 		{
+			// TODO:: Make these variables private
 		public:
-			maths::Vector3 m_Position;
-			maths::Vector2 m_Size;
-			unsigned int m_Color;
-			std::vector<maths::Vector2> m_UV;
-			Texture* m_Texture;
-
-			IRenderable2D() : m_Texture(nullptr)
-			{
-				SetUVDefaults();
-			};
+			maths::Vector3 m_Position;						// Holds the position of the renderable
+			maths::Vector2 m_Size;							// Holds the size of the renderable
+			unsigned int m_Color;							// Holds the color value of the renderable
+			std::vector<maths::Vector2> m_UV;				// The texture coordinates of the renderable
+			Texture* m_Texture;								// A pointer to the texture 
 
 		public:
-			IRenderable2D(maths::Vector3 pos, maths::Vector2 size, unsigned int color):
-				m_Position(pos), m_Size(size), m_Color(color), m_Texture(nullptr)
-			{
-				SetUVDefaults();
-			};
+			IRenderable2D();			
 
-			virtual void Submit(IRenderer2D* renderer) const
-			{
-				renderer->Submit(this);
-			}
+			IRenderable2D(maths::Vector3 pos, maths::Vector2 size, unsigned int color);
 
-			void SetColor(unsigned int color) { m_Color = color; }
-			void SetColor(maths::Vector4& color)
-			{
-				int r = color.m_X * 255.0f;
-				int g = color.m_Y * 255.0f;
-				int b = color.m_Z * 255.0f;
-				int a = color.m_W * 255.0f;
+			// Pass it the renderer in which you want to submit the renderable
+			virtual void Submit(IRenderer2D* renderer) const;			
+			// Sets the color of the renderable(Hex values)
+			void SetColor(unsigned int color);
+			// Set the color of the renderabel(RGB)
+			void SetColor(maths::Vector4& color);			
 
-				m_Color = a << 24 | b << 16 | g << 8 | r;
-			}
-
+			// Returns the position of the renderable
 			inline const maths::Vector3& GetPosition() const { return m_Position; }
 			inline const maths::Vector2& GetSize() const { return m_Size; }
-			inline const unsigned int GetColor() const { return m_Color; }
+			inline const unsigned int GetColor() const { return m_Color;}
 			inline const std::vector<maths::Vector2>& GetUV() const { return m_UV; }
-			inline const GLuint getTID() const { return m_Texture == nullptr ? 0 : m_Texture->GetTextID();}
+			inline const GLuint getTextID() const { return m_Texture == nullptr ? 0 : m_Texture->GetTextID(); }
 
 		private:
-			void SetUVDefaults() 
-			{
-				m_UV.push_back(maths::Vector2(0, 0));
-				m_UV.push_back(maths::Vector2(0, 1));
-				m_UV.push_back(maths::Vector2(1, 1));
-				m_UV.push_back(maths::Vector2(1, 0));
-			}
-		};
+			void SetUVDefaults();				
+		};		
 	}
 }
 

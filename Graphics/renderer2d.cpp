@@ -1,190 +1,169 @@
 #include "renderer2d.h"
+#include "textureManager.h"
 
-dream::graphics::BatchRenderer2D::BatchRenderer2D()
-{
-	Init();
-}
+namespace dream {
+	namespace graphics {
 
-dream::graphics::BatchRenderer2D::~BatchRenderer2D()
-{	
-	delete m_EBO;
-	// This is from arrayBuffer
-	glDeleteBuffers(1, &m_VBO);	
-}
-
-void dream::graphics::BatchRenderer2D::Init()
-{
-	// vertexArray
-	glGenVertexArrays(1, &m_VAO);
-	// arrayBuffer
-	glGenBuffers(1, &m_VBO);
-	// vertexArray
-	glBindVertexArray(m_VAO);
-
-	//arrayBuffer
-	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
-	//arrayBuffer change a bit in class
-	glBufferData(GL_ARRAY_BUFFER, RENDERER_BUFFER_SIZE, NULL, GL_DYNAMIC_DRAW);
-
-	// Tell OpenGL to enable the generic vertex attribute array specified by index
-	// and use the currently bound VAO for the operations
-	glEnableVertexAttribArray(SHADER_VERTEX_INDEX);
-	glEnableVertexAttribArray(SHADER_UV_INDEX);
-	glEnableVertexAttribArray(SHADER_TID_INDEX);
-	glEnableVertexAttribArray(SHADER_COLOR_INDEX);
-
-	// Specify the location and data format of the array of generic vertex attributes at index "index" to use when rendering
-	glVertexAttribPointer(SHADER_VERTEX_INDEX, 3, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)0);
-	glVertexAttribPointer(SHADER_UV_INDEX, 2, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)(offsetof(VertexData, VertexData::uv)));
-	glVertexAttribPointer(SHADER_TID_INDEX, 1, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)(offsetof(VertexData, VertexData::tid)));
-	glVertexAttribPointer(SHADER_COLOR_INDEX, 4, GL_UNSIGNED_BYTE, GL_TRUE, RENDERER_VERTEX_SIZE, (const GLvoid*)(offsetof(VertexData, VertexData::color)));
-
-	// arrayBuffer
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-	GLuint* indicies = new GLuint[RENDERER_INDICIES_SIZE];
-
-	int offset = 0;
-	for (unsigned int i = 0; i < RENDERER_INDICIES_SIZE; i += 6)
-	{
-		indicies[i] = offset + 0;
-		indicies[i + 1] = offset + 1;
-		indicies[i + 2] = offset + 2;
-
-		indicies[i + 3] = offset + 2;
-		indicies[i + 4] = offset + 3;
-		indicies[i + 5] = offset + 0;
-
-		offset += 4;
-	}
-
-	m_EBO = new ElementBuffer(indicies, RENDERER_INDICIES_SIZE);
-
-	//vertexArray
-	glBindVertexArray(0);
-}
-
-
-void dream::graphics::BatchRenderer2D::Begin()
-{
-	// This is from arrayBuffer
-	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
-	//
-	m_buffer = (VertexData*)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-}
-
-void dream::graphics::BatchRenderer2D::Submit(const IRenderable2D * renderable)
-{
-	const maths::Vector3& position = renderable->GetPosition();
-	const maths::Vector2& size = renderable->GetSize();
-	const unsigned int color = renderable->GetColor();
-	const std::vector<maths::Vector2>& uv = renderable->GetUV();
-	const GLuint tid = renderable->getTID();
-
-	unsigned int channel = 0;
-
-	float ts = 0.0f;
-	if (tid > 0)
-	{
-		bool found = false;
-		for (size_t i = 0; i < m_TextureSlots.size(); i++)
+		Renderer2D::Renderer2D() :
+			m_VBO(new ArrayBuffer(NULL, RENDERER_BUFFER_SIZE, GL_DYNAMIC_DRAW)),
+			m_VAO(new VertexArray())
 		{
-			if (m_TextureSlots[i] == tid)
-			{
-				ts = (float)(i + 1);
-				found = true;
-				break;
-			}
+			Init();
 		}
 
-		if (!found)
+		Renderer2D::~Renderer2D()
 		{
-			if (m_TextureSlots.size() >= RENDERER_MAX_TEXTURES) 
-			{
-				End();
-				Flush();
-				Begin();
-			}
-			m_TextureSlots.push_back(tid);
-			ts = (float)(m_TextureSlots.size());
+			delete m_EBO;
+			delete m_VAO;
+			delete m_VBO;
+			delete m_indices;
 		}
-	}	
 
-	m_buffer->vertex = maths::Mat4x4::Identity() * position;
-	m_buffer->uv = uv[0];
-	m_buffer->tid = ts;
-	m_buffer->color = color;
-	m_buffer++;
+		void Renderer2D::Init()
+		{
+			m_VAO->Bind();
+			m_VBO->Bind();
 
-	m_buffer->vertex = maths::Mat4x4::Identity() * maths::Vector3(position.m_X, position.m_Y + size.m_Y, position.m_Z);
-	m_buffer->uv = uv[1];
-	m_buffer->tid = ts;
-	m_buffer->color = color;
-	m_buffer++;
+			// Tell OpenGL to enable the generic vertex attribute array specified by index
+			// and use the currently bound VAO for the operations
+			glEnableVertexAttribArray(SHADER_VERTEX_INDEX);
+			glEnableVertexAttribArray(SHADER_UV_INDEX);
+			glEnableVertexAttribArray(SHADER_TID_INDEX);
+			glEnableVertexAttribArray(SHADER_COLOR_INDEX);
 
-	m_buffer->vertex = maths::Mat4x4::Identity() * maths::Vector3(position.m_X + size.m_X, position.m_Y + size.m_Y, position.m_Z);
-	m_buffer->uv = uv[2];
-	m_buffer->tid = ts;
-	m_buffer->color = color;
-	m_buffer++;
+			// Specify the location and data format of the array of generic vertex attributes at index "index" to use when rendering
+			glVertexAttribPointer(SHADER_VERTEX_INDEX, 3, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)0);
+			glVertexAttribPointer(SHADER_UV_INDEX, 2, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)(offsetof(VertexData, VertexData::textCoord)));
+			glVertexAttribPointer(SHADER_TID_INDEX, 1, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)(offsetof(VertexData, VertexData::textureId)));
+			glVertexAttribPointer(SHADER_COLOR_INDEX, 4, GL_UNSIGNED_BYTE, GL_TRUE, RENDERER_VERTEX_SIZE, (const GLvoid*)(offsetof(VertexData, VertexData::color)));
 
-	m_buffer->vertex = maths::Mat4x4::Identity() * maths::Vector3(position.m_X + size.m_X, position.m_Y, position.m_Z);
-	m_buffer->uv = uv[3];
-	m_buffer->tid = ts;
-	m_buffer->color = color;
-	m_buffer++;
+			// Unbind buffer object	
+			m_VBO->Unbind();			
 
-#pragma region oldCode
-	//m_buffer->vertex = *m_transformationBack * position;
-	//m_buffer->uv = uv[0];
-	//m_buffer->tid = ts;
-	//m_buffer->color = color;
-	//m_buffer++;
+			// Create indices and save the pointer
+			m_indices = ElementBuffer::CreateIndexTriangles(RENDERER_INDICES_SIZE);
+			// Create new Element buffer object and pass it the data
+			m_EBO = new ElementBuffer(m_indices, RENDERER_INDICES_SIZE);
+		
+			m_VAO->Unbind();
+		}
 
-	//m_buffer->vertex = *m_transformationBack * maths::Vector3(position.m_X, position.m_Y + size.m_Y, position.m_Z);
-	//m_buffer->uv = uv[1];
-	//m_buffer->tid = ts;
-	//m_buffer->color = color;
-	//m_buffer++;
+		inline void Renderer2D::SubmitVertexData(const IRenderable2D * renderable, const float textId)
+		{
+			const maths::Vector3& position = renderable->GetPosition();
+			const maths::Vector2& size = renderable->GetSize();
+			const unsigned int color = renderable->GetColor();
+			const std::vector<maths::Vector2>& uv = renderable->GetUV();
+			
+			// Submit data to vertex date object and advance(Mapped to OpenGL)
+			m_buffer->Submit(position, uv[0], textId, color);
+			m_buffer++;
 
-	//m_buffer->vertex = *m_transformationBack * maths::Vector3(position.m_X + size.m_X, position.m_Y + size.m_Y, position.m_Z);
-	//m_buffer->uv = uv[2];
-	//m_buffer->tid = ts;
-	//m_buffer->color = color;
-	//m_buffer++;
+			// Submit data to vertex date object and advance
+			maths::Vector3 tempPos = maths::Vector3(position.m_X, position.m_Y + size.m_Y, position.m_Z);
+			m_buffer->Submit(tempPos, uv[1], textId, color);
+			m_buffer++;
 
-	//m_buffer->vertex = *m_transformationBack * maths::Vector3(position.m_X + size.m_X, position.m_Y, position.m_Z);
-	//m_buffer->uv = uv[3];
-	//m_buffer->tid = ts;
-	//m_buffer->color = color; 
-	//m_buffer++;
-#pragma endregion	
+			// Submit data to vertex date object and advance
+			tempPos = maths::Vector3(position.m_X + size.m_X, position.m_Y + size.m_Y, position.m_Z);
+			m_buffer->Submit(tempPos, uv[2], textId, color);
+			m_buffer++;
 
-	m_indexCount += 6;
-}
+			// Submit data to vertex date object and advance
+			tempPos = maths::Vector3(position.m_X + size.m_X, position.m_Y, position.m_Z);
+			m_buffer->Submit(tempPos, uv[3], textId, color);
+			m_buffer++;
+		}
 
-void dream::graphics::BatchRenderer2D::End()
-{
-	glUnmapBuffer(GL_ARRAY_BUFFER);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-}
+		bool Renderer2D::SelectTexture(const IRenderable2D * renderable, float& textId)
+		{
+			const GLuint tid = renderable->getTextID();			
+			// check if renderable has a texture assigned to id
+			if (tid > 0) 
+			{			
+				// Look for textId and if found return true
+				for (size_t i = 0; i < m_Textures.size(); i++)
+				{
+					if (m_Textures[i] == tid)
+					{
+						textId = (float)(i + 1);
+						return true;
+					}
+				}
+			}
+			return false;
+		}
 
-void dream::graphics::BatchRenderer2D::Flush()
-{
-	for (size_t i = 0; i < m_TextureSlots.size(); i++)
-	{
-		glActiveTexture(GL_TEXTURE0 + i);
-		glBindTexture(GL_TEXTURE_2D, m_TextureSlots[i]);
+		bool Renderer2D::AddTexture(const IRenderable2D * renderable, float& textId)
+		{
+			const GLuint tid = renderable->getTextID();
+			if (tid > 0)
+			{				
+				// If textures saved have reached limit flush renderer
+				// and restart adding the new texture. MIGHT CAUSE PERFORMANCE ISSUES
+				if (m_Textures.size() >= RENDERER_MAX_TEXTURES)
+				{
+					Stop();
+					Flush();
+					Start();
+				}
+				m_Textures.push_back(tid);
+				textId = (float)(m_Textures.size());
+				return true;
+			}
+			return false;
+		}
+
+		void Renderer2D::Start()
+		{
+			// Bind buffer object
+			m_VBO->Bind();
+			// Map vertex data to OpenGL
+			m_buffer = VertexData::MapBuffer();
+		}
+
+		void Renderer2D::Submit(const IRenderable2D * renderable)
+		{							
+			const GLuint tid = renderable->getTextID();			
+			float textId = 0.0f;		
+			
+			// Look for texture or add it if it doen't exist
+			if (!SelectTexture(renderable, textId))
+				AddTexture(renderable, textId);
+
+			// Submbit data to OpenGL
+			SubmitVertexData(renderable, textId);
+			
+			// Increment indices count
+			m_indexCount += 6;
+		}
+
+		void Renderer2D::Stop()
+		{
+			// Unmap vertext data from OpenGL
+			VertexData::UnmapBuffer();		
+			m_VBO->Unbind();
+		}
+
+		void Renderer2D::Flush()
+		{		
+			// Bind texture array
+			TextureManager::Instance().BindTextureArray(&m_Textures);
+
+			// Prepare buffer for rendering
+			m_VAO->Bind();
+			m_EBO->Bind();
+
+			// ORDER OpenGL to draw
+			glDrawElements(GL_TRIANGLES, m_indexCount, GL_UNSIGNED_INT, NULL);
+
+			// Clean things for the next round
+			m_EBO->Unbind();
+			m_VAO->Unbind();
+
+			m_indexCount = 0;
+			m_Textures.clear();
+		}
 	}
-
-	glBindVertexArray(m_VAO);
-	m_EBO->Bind();
-	
-	glDrawElements(GL_TRIANGLES, m_indexCount, GL_UNSIGNED_INT, NULL);
-
-	m_EBO->Unbind();
-	glBindVertexArray(0);
-	m_indexCount = 0;
-
-	m_TextureSlots.clear();
 }
+

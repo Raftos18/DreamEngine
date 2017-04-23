@@ -1,4 +1,4 @@
-#pragma once
+ #pragma once
 
 // Include FreeImage
 #include <FreeImage.h>
@@ -14,22 +14,23 @@ namespace dream
 		class Texture
 		{
 		private:
-			std::string m_name;
-			std::string m_filename;
-			GLuint m_tID;
-			GLsizei m_width, m_height;
+			std::string m_Name;						// Name of the texture
+			std::string m_Filename;					// Holds the filepath
+			GLuint m_TextureId;						// Holds the texture id
+			GLsizei m_Width, m_Height;				// Holds the width/ height of the texture
 
 		public:
 			Texture(const std::string& name, const std::string& m_filename);
-			~Texture();
+			~Texture();			
+
 			void Bind() const;
 			void Unbind() const;
 
-			inline const std::string& GetName() const { return m_name; }
-			inline const std::string& GetFileName() const { return m_filename; }
-			inline const unsigned int GetWidth() const { return m_width; }
-			inline const unsigned int GetHeight() const { return m_height; }
-			inline const GLuint GetTextID() const { return m_tID; }
+			inline const std::string& GetName() const { return m_Name; }
+			inline const std::string& GetFileName() const { return m_Filename; }
+			inline const unsigned int GetWidth() const { return m_Width; }
+			inline const unsigned int GetHeight() const { return m_Height; }
+			inline const GLuint GetTextID() const { return m_TextureId; }
 
 		private:
 			GLuint Load();

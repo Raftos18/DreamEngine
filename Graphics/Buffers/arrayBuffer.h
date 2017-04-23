@@ -16,7 +16,9 @@ namespace dream
 			GLuint m_Count;			// Holds the count of the components			
 
 		public:
-			// Default constructor. Generate, bind and stores data to the ArrayBuffer object
+			// Default constructor. 
+			ArrayBuffer(GLfloat* data, GLsizei size, GLenum usage);
+			// Used for more primitive draw techniques. Generate, bind and stores data to the ArrayBuffer object
 			ArrayBuffer(GLfloat* data, GLsizei size, GLint componentCount);
 			~ArrayBuffer();
 			

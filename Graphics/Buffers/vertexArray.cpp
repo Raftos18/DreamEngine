@@ -12,9 +12,10 @@ namespace dream
 		dream::graphics::VertexArray::~VertexArray()
 		{
 			// Modern approach
-			for (std::vector<ArrayBuffer*>::const_iterator iter = m_Buffers.begin(); 
-				iter != m_Buffers.end(); iter++)			
-				delete *iter;
+			if(m_Buffers.size() > 0)
+				for (std::vector<ArrayBuffer*>::const_iterator iter = m_Buffers.begin(); 
+					iter != m_Buffers.end(); iter++)			
+					delete *iter;
 
 			// Delete vertex array buffer
 			glDeleteVertexArrays(1, &m_VAO);

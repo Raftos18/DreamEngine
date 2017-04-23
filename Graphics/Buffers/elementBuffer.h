@@ -14,8 +14,6 @@ namespace dream
 
 		public:
 			// Generates, binds and stores the data to an element buffer object
-			ElementBuffer(GLushort* data, GLsizei count);
-			// Generates, binds and stores the data to an element buffer object
 			ElementBuffer(GLuint* data, GLsizei count);
 			~ElementBuffer();
 
@@ -23,6 +21,10 @@ namespace dream
 			void Bind() const;
 			// Unbinds the buffer
 			void Unbind() const;
+
+			// Creates a Indexed Triangle list stored in an array and returns a pointer to it
+			// Call delete when no longer needed. Smart Pointers whould be a really good idea here
+			static GLuint* CreateIndexTriangles(int indicesSize);
 
 			// Returns the count of indicies
 			inline GLuint GetCount() const { return m_Count; }

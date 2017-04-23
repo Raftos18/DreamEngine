@@ -10,7 +10,12 @@ namespace dream {
 		{
 			friend class Texture;
 		private:
-			TextureManager() {};
+			GLint* m_TextIds;
+
+		private:
+			TextureManager();
+			~TextureManager() override;		
+
 		public:
 			static TextureManager& Instance() 
 			{
@@ -18,8 +23,11 @@ namespace dream {
 				return instance;
 			}			
 
-			void Init() override { /*No Initialization needed*/};			
+			static void BindTextureArray(std::vector<GLuint>* textures);
+
+			void Init() override { /*No Initialization needed*/};					
 			Texture* Get(const std::string& name);			
+			GLint* GetTextureIds(){ return m_TextIds; }
 		};
 	}
 }

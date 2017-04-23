@@ -5,6 +5,18 @@ namespace dream
 {
 	namespace graphics
 	{
+		ArrayBuffer::ArrayBuffer(GLfloat * data, GLsizei size, GLenum usage)		
+		{
+			// Instruct OpenGL to generate a new buffer object and store its id to m_VBO
+			glGenBuffers(1, &m_VBO);
+			// Bind this buffer object to an GL_ARRAY_BUFFER using the stored id
+			glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
+			// Pass our user defined data to the bound buffer
+			glBufferData(GL_ARRAY_BUFFER, size, data, usage);
+			// Release the buffer
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+		}
+
 		ArrayBuffer::ArrayBuffer(GLfloat * data, GLsizei size, GLint componentCount)
 			: m_Count(componentCount)
 		{

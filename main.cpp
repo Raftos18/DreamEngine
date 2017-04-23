@@ -43,15 +43,19 @@ int main()
 	GTimer.Init();		
 
 	int frames = 0;		
+	
+	TextureManager::Instance().Init();
+	TextureManager::Instance().Add(new Texture("Star", "C:/Users/Nikos/Desktop/t.png"));
 
-	for (float i = -9.0f; i < 9.0f; i += .1f)
+	for (float i = -9.0f; i < 9.0f; i += .5f)
 	{
-		for (float j = -16.0f; j < 16.0f; j += .1f) 
+		for (float j = -16.0f; j < 16.0f; j += .5f) 
 		{			
-			if(rand() % 3 == 0)
-				layer.Add(new Sprite(j, i, .1f, .1f, 0xffffffff));
-			else
-				layer.Add(new Sprite(j, i, .1f, .1f, 0xff000000));								
+			layer.Add(new Sprite(j, i, .5f, .5f, TextureManager::Instance().Get("Star")));
+			/*if (rand() % 2 == 0)
+				layer.Add(new Sprite(j, i, .5f, .5f, 0xffffffff));
+			else				
+				layer.Add(new Sprite(j, i, .5f, .5f, 0xff000000));							*/
 		}
 	}		
 		
@@ -61,8 +65,6 @@ int main()
 	float ti = 0.0f;
 	float ut = 0.0f;
 
-	utilities::Timer UTimer;
-	UTimer.Init();
 
 	float terbulance = 1.0f;
 	float color = 1.0f;
@@ -70,39 +72,26 @@ int main()
 	{	
 		window.Clear();
 		if (ti < 1.0f)
-		{					
-			t += 0.1f * (1.0f / GTimer.GetTime());
-
+		{								
 			const std::vector<IRenderable2D*>& rs = layer.GetRenderables();
 			for (size_t i = 0; i < rs.size(); i++)
 			{												
-				if (i % 2 == 0) {					
-					terbulance += GTimer.GetElapsedSeconds() * .2f;
-					color -= 0.2 * GTimer.GetElapsedSeconds();
-					rs[i]->SetColor(Vector4(0.0f, 0.8, 0.5f, 1));									
-				}
-				else
-				{
-					rs[i]->SetColor(Vector4(0.0, 0.0, terbulance, 1));															
-				}
-				rs[i]->m_Position = Mat4x4::Rotate(cos(terbulance), Vector3(0.0f, 0.0f, -1.0f)) * rs[i]->m_Position;
+				terbulance += 0.01;				
+				rs[i]->m_Position = Mat4x4::Rotate(tan(terbulance), Vector3(0.0f, 0.0f, 1.0f)) * rs[i]->m_Position;								
 			}				
 
-			if (terbulance > 2000000)
-				terbulance = 1.0f;
-
-			UTimer.Update();		
+			if (terbulance > 1.0f)
+				terbulance = 0.0f;
+			
 
 			// Happens every frame
 			float x, y;			
 			input.GetMousePosition(x, y);
 			sh->SetUniform2f("lightPos", Vector2((float)(x * 32.0f / window.GetWidth() - 16.0f), (float)(9.0f - y * 18.0f / window.GetHeight())));
-
-			if (input.IsKeyUp(KeyboardKeys::P))
-			{
-				std::cout << "Play button pressed\n";
-				window.MakeFullscreen();			
-				window.SetVSync(true);
+						
+			if (input.IsKeyUp(KeyboardKeys::V))
+			{				
+				window.SetVSync(false);
 			}
 
 			ti += GTimer.GetElapsedSeconds();			
@@ -121,6 +110,7 @@ int main()
 		}		
 
 	}	
+
 	return 0;
 }
 #else
