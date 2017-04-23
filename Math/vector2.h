@@ -49,7 +49,6 @@ namespace dream
 			bool operator==(const Vector2 other);
 			bool operator!=(const Vector2 other);
 
-
 			Vector2& operator+=(float value);
 			Vector2& operator+=(const Vector2& other);
 

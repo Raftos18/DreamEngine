@@ -1,6 +1,6 @@
 #pragma once
 
-#include "renderable2d.h"
+#include "../Interfaces/IRenderable2d.h"
 
 namespace dream
 {
@@ -9,26 +9,10 @@ namespace dream
 		class Sprite : public IRenderable2D
 		{			
 		public:
-			Sprite(float x, float y, float width, float height, Vector4& color);
-			Sprite(float x, float y, float width, float height, Texture* texture);
-		};
-
-		class StaticSprite : public IRenderable2D
-		{
-		private:
-			// Smart pointers would be a much better choice
-			VertexArray* m_VertexArray;
-			IndexBuffer* m_IndexBuffer;
-
-			Shader& m_Shader;
+			maths::Vector3& Position;
 		public:
-			StaticSprite(float x, float y, float width, float height, Vector4& color, Shader& shader);
-			~StaticSprite();
-
-			inline Shader& GetShader() const { return m_Shader; }
-
-			inline const VertexArray* GetVAO() const { return m_VertexArray; }
-			inline const IndexBuffer* GetIBO() const { return m_IndexBuffer; }
-		};
+			Sprite(float x, float y, float width, float height, unsigned int color);
+			Sprite(float x, float y, float width, float height, Texture* texture);
+		};	
 	} 
 }

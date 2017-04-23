@@ -1,5 +1,5 @@
 #pragma once
-#include "..\renderable2d.h"
+#include "../../Interfaces/IRenderable2d.h"
 
 namespace dream
 {
@@ -12,6 +12,9 @@ namespace dream
 			maths::Mat4x4 m_transformationMatrix;
 		public:
 			Group(maths::Mat4x4& tranform);
+
+			~Group();
+
 			void Submit(IRenderer2D* renderer) const override; 
 
 			void Add(IRenderable2D* renderable);

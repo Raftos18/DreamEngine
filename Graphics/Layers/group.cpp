@@ -6,6 +6,12 @@ dream::graphics::Group::Group(maths::Mat4x4& tranform):
 
 }
 
+dream::graphics::Group::~Group()
+{
+	for (size_t i = 0; i < m_renderables.size(); i++)	
+		delete m_renderables[i];	
+}
+
 void dream::graphics::Group::Submit(IRenderer2D * renderer) const
 {
 	renderer->Push(m_transformationMatrix, false);

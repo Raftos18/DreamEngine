@@ -9,38 +9,40 @@
 #include FT_FREETYPE_H
 //
 // Dream
-#include "renderer2d.h"
+#include "../Interfaces/IRenderer2d.h"
 
 namespace dream {
 	namespace graphics {
 
-		struct Character {
+		struct Character {					
 			GLuint TextureID;   // ID handle of the glyph texture
 			maths::Vector2 Size;    // Size of glyph
 			maths::Vector2 Bearing;  // Offset from baseline to left/top of glyph
 			GLuint Advance;    // Horizontal offset to advance to next glyph
 		};
 
-		// MAKE THE TWO RENDERERS WORK TOGETHER.
-		// MAKE POSSIBLE TO CHANGE COLORS AND FONTS ON THE FLY.
+		// Currently broken.
+		// Need to be intergrated into the rest of the program.
 		class TextRenderer : public IRenderer2D
 		{
-		private:
-			GLuint						VAO;
-			GLuint						VBO;
+		private:			
+			GLuint m_VAO;
+			GLuint m_VBO;
 
 			FT_Library					m_Lib;
-			FT_Face						m_Face;
+			FT_Face						m_Face;			
 			std::map<GLchar, Character> m_Characters;
 	
 		public:
-			TextRenderer(const std::string fontFilename);
+			TextRenderer();
 			~TextRenderer();
 
-			void RenderText(const std::string& text, float x, float y, float scale, maths::Vector3& color) override;
+			void RenderText(const std::string& font, const std::string& text, float x, float y, float scale, unsigned int color) override;
+			
+		protected:
+			void Init();
+			void Flush() override;
 
-		private:
-			void Init(const std::string fontFilename);
 			void GenerateCharacters();
 			void CleanFreeType();
 		};

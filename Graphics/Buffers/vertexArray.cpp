@@ -4,38 +4,46 @@ namespace dream
 {
 	namespace graphics
 	{
-		dream::graphics::VertexArray::VertexArray()
+		VertexArray::VertexArray()
 		{
-			glGenVertexArrays(1, &m_ArrayID);
+			glGenVertexArrays(1, &m_VAO);
 		}
 
 		dream::graphics::VertexArray::~VertexArray()
 		{
-			for (size_t i = 0; i < m_Buffers.size(); i++)
-				delete m_Buffers[i];
+			// Modern approach
+			for (std::vector<ArrayBuffer*>::const_iterator iter = m_Buffers.begin(); 
+				iter != m_Buffers.end(); iter++)			
+				delete *iter;
 
-			glDeleteVertexArrays(1, &m_ArrayID);
+			// Delete vertex array buffer
+			glDeleteVertexArrays(1, &m_VAO);
 		}
 
-		void dream::graphics::VertexArray::AddBuffer(Buffer * buffer, GLuint index)
+		void VertexArray::AddBuffer(ArrayBuffer * buffer, GLuint index)
 		{
+			// Bind this buffer
 			Bind();
+			// Bind the array buffer passed
 			buffer->Bind();
+			// Enable the indicated attribute on the vertex buffer
 			glEnableVertexAttribArray(index);
-
+			// Then set the vertex attributes pointers
 			glVertexAttribPointer(index, buffer->GetComponentCount(), GL_FLOAT, GL_FALSE, 0, 0);
+			// Add the buffers to the vector
 			this->m_Buffers.push_back(buffer);
-
+			// Unbind array buffer object
 			buffer->Unbind();
-			Unbind();
+			// Unbind this
+			Unbind();			
 		}
 
-		void dream::graphics::VertexArray::Bind() const
+		void VertexArray::Bind() const
 		{
-			glBindVertexArray(m_ArrayID);
+			glBindVertexArray(m_VAO);
 		}
 
-		void dream::graphics::VertexArray::Unbind() const
+		void VertexArray::Unbind() const
 		{
 			glBindVertexArray(0);
 		}

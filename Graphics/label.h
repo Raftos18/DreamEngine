@@ -6,24 +6,23 @@
 #include <map>
 
 // Dream
-#include "renderable2d.h"
+#include "../Interfaces/IRenderable2d.h"
 
 namespace dream {
 	namespace graphics {
-
-		// Make this work properly with color from base class
+				
 		class Label : public IRenderable2D
 		{
 		private:
+			std::string					m_Font;				// Default font is arial.
 			std::string					m_Text;						
-			GLfloat						m_Scale;
-
-			// REFACTOR
-			maths::Vector3				Color;
-		
+			GLfloat						m_Scale;	
+				
 		public:			
-			Label(const std::string text, maths::Vector2 position, GLfloat scale, maths::Vector3 color);
+			Label(const std::string text, maths::Vector2 position, GLfloat scale, unsigned int color);			
 			~Label() {};
+
+			inline void SetFont(const std::string& fontFilename) { m_Font = fontFilename; }			
 
 			void Submit(IRenderer2D* renderer) const override;					
 		};

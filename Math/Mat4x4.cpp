@@ -1,4 +1,4 @@
-#include "Mat4x4.h"
+#include "mat4x4.h"
 #include "Vector3.h"
 
 #include <cstdint>
@@ -13,13 +13,15 @@ namespace dream
 		}
 
 		Mat4x4::Mat4x4()
-		{
-			memset(m_Elements, 0, 4 * 4 * sizeof(float));
+		{			
+			for (size_t i = 0; i < 4 * 4; i++)		
+				m_Elements[i] = 0;			
 		}
 
 		Mat4x4::Mat4x4(float diagonal)
 		{
-			memset(m_Elements, 0, 4 * 4 * sizeof(float));
+			for (size_t i = 0; i < 4 * 4; i++)
+				m_Elements[i] = 0;
 
 			m_Elements[0 + 0 * 4] = diagonal;
 			m_Elements[1 + 1 * 4] = diagonal;
@@ -32,7 +34,7 @@ namespace dream
 			return Mat4x4(1.0f);
 		}
 
-		Mat4x4 dream::maths::Mat4x4::Orthographic(float left, float right, float bottom, float top, float near, float far)
+		Mat4x4 Mat4x4::Orthographic(float left, float right, float bottom, float top, float near, float far)
 		{
 			Mat4x4 result(1.0f);
 
@@ -49,7 +51,7 @@ namespace dream
 			return result;
 		}
 
-		Mat4x4 dream::maths::Mat4x4::Perspective(float fov, float aspectRatio, float near, float far)
+		Mat4x4 Mat4x4::Perspective(float fov, float aspectRatio, float near, float far)
 		{
 			Mat4x4 result(1.0f);
 			
@@ -67,21 +69,23 @@ namespace dream
 			return result;
 		}
 
-		Mat4x4 & dream::maths::Mat4x4::Multiply(const Mat4x4 other)
+		Mat4x4& Mat4x4::Multiply(const Mat4x4 other)
 		{
 			float data[16];
-			for (int32_t row = 0; row < 4; row++)
+			for (int32_t i = 0; i < 4; i++)
 			{
-				for (int32_t col = 0; col < 4; col++)
+				for (int32_t j = 0; j < 4; j++)
 				{
 					float sum = 0.0f;
-					for (int32_t e = 0; e < 4; e++)
+					for (int32_t k = 0; k < 4; k++)
 					{
-						sum += m_Elements[e + row * 4] * other.m_Elements[col + e * 4];
+						sum += m_Elements[k + i * 4] * other.m_Elements[j + k * 4];
 					}
-					data[col + row * 4] = sum;
+					// Multiply with 4 to get the correct position in m_Elements
+					data[j + i * 4] = sum;
 				}
 			}
+			// Copy data to this->m_Elements
 			memcpy(m_Elements, data, 4 * 4 * sizeof(float));
 
 			return *this;
@@ -106,7 +110,7 @@ namespace dream
 				);
 		}
 
-		Mat4x4 dream::maths::operator*(Mat4x4 left, const Mat4x4 & right)
+		Mat4x4 operator*(Mat4x4 left, const Mat4x4 & right)
 		{
 			return left.Multiply(right);
 		}
@@ -121,12 +125,12 @@ namespace dream
 			return left.Multiply(right);
 		}
 
-		Mat4x4 & dream::maths::Mat4x4::operator*=(const Mat4x4 other)
+		Mat4x4 & Mat4x4::operator*=(const Mat4x4 other)
 		{
 			return Multiply(other);
 		}
 
-		Mat4x4 dream::maths::Mat4x4::Translate(Vector3 & translation)
+		Mat4x4 Mat4x4::Translate(Vector3 & translation)
 		{
 			Mat4x4 result(1.0f);
 
@@ -137,7 +141,7 @@ namespace dream
 			return result;
 		}
 
-		Mat4x4 dream::maths::Mat4x4::Rotate(float angle, Vector3 & axis)
+		Mat4x4 Mat4x4::Rotate(float angle, Vector3 & axis)
 		{
 			Mat4x4 result(1.0f);
 
@@ -166,7 +170,7 @@ namespace dream
 			return result;
 		}
 
-		Mat4x4 dream::maths::Mat4x4::Scale(Vector3 & scale)
+		Mat4x4 Mat4x4::Scale(Vector3 & scale)
 		{
 			Mat4x4 result(1.0f);
 
@@ -176,6 +180,5 @@ namespace dream
 
 			return result;
 		}
-
 	}
 }

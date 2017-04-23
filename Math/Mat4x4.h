@@ -8,9 +8,7 @@ namespace dream
 	{
 		class Mat4x4 
 		{			
-		public:
-			// This union isn't the best solution.
-			// But it works
+		public:			
 			union
 			{
 				float m_Elements[4 * 4];
@@ -21,10 +19,10 @@ namespace dream
 			};
 		public:
 			Mat4x4();
-
-			// There is literaly no reason for this
+			
 			Mat4x4(float diagonal);
 			static Mat4x4 Identity();
+
 			// These should be in a camera class
 			static Mat4x4 Orthographic(float left, float right, float bottom, float top, float near, float far);
 			static Mat4x4 Perspective(float fov, float aspectRatio, float near, float far);
@@ -42,7 +40,9 @@ namespace dream
 			// These should be more abstracted
 			static Mat4x4 Translate(Vector3& translation);
 			static Mat4x4 Rotate(float angle, Vector3& axis);
-			static Mat4x4 Scale(Vector3& scale);
+			static Mat4x4 Scale(Vector3& scale);			
+
+			static float* const ValuePtr(Mat4x4 mat) { return &(mat.Columns[0].m_X); }
 		};
 	}
 }
